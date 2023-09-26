@@ -32,10 +32,21 @@ export default function TodoList() {
   }
 
   function toggleTodo(id) {
-    console.log(`Toggle item with id ${id}`);
     const newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
     todo.complete = !todo.complete;
+    setTodos(newTodos);
+  }
+
+  function clearItem(id) {
+    console.log("clear item");
+    const newTodos = [...todos].filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+  }
+
+  function clearComplete() {
+    const newTodos = [...todos].filter((todo) => !todo.complete);
+    console.log(newTodos);
     setTodos(newTodos);
   }
 
@@ -49,10 +60,18 @@ export default function TodoList() {
         autoFocus
       />
       <button onClick={addTodo}>Submit</button>
-      <button>Clear complete</button>
-      <div>{todos.length} items in list.</div>
+      <button onClick={clearComplete}>Clear complete</button>
+      <div>
+        {todos.length} items in list;{" "}
+        {todos.filter((todo) => !todo.complete).length} not yet completed.
+      </div>
       {todos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} toggleAction={toggleTodo} />
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          toggleAction={toggleTodo}
+          clearItem={clearItem}
+        />
       ))}
     </>
   );
