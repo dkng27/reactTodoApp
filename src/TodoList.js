@@ -50,6 +50,10 @@ export default function TodoList() {
     setTodos(newTodos);
   }
 
+  function clearAll() {
+    setTodos([]);
+  }
+
   return (
     <>
       <input
@@ -61,6 +65,7 @@ export default function TodoList() {
       />
       <button onClick={addTodo}>Submit</button>
       <button onClick={clearComplete}>Clear complete</button>
+      <button onClick={clearAll}>Clear all</button>
       <div>
         {todos.length} items in list;{" "}
         {todos.filter((todo) => !todo.complete).length} not yet completed.
