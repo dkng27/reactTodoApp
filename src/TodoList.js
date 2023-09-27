@@ -9,10 +9,19 @@ export default function TodoList() {
     const stored_todos = localStorage.getItem(LOCAL_STORAGE_KEY);
     return JSON.parse(stored_todos) || [];
   });
+  const [toggleState, setToggleState] = useState(false);
+
   const newTodoName = useRef();
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
+    if (
+      todos.length === 0 ||
+      todos.length === todos.filter((todo) => todo.complete).length
+    )
+      setToggleState(false);
+    else if (todos.filter((todo) => todo.complete).length === 0)
+      setToggleState(true);
   }, [todos]);
 
   function enterKey(e) {
@@ -54,6 +63,13 @@ export default function TodoList() {
     setTodos([]);
   }
 
+  function toggleAll() {
+    const newTodos = [...todos];
+    newTodos.forEach((todo) => (todo.complete = toggleState));
+    //setToggleState(!toggleState);
+    setTodos(newTodos);
+  }
+
   return (
     <>
       <input
@@ -65,9 +81,12 @@ export default function TodoList() {
       />
       <button onClick={addTodo}>Submit</button>
       <button onClick={clearComplete}>Clear complete</button>
+      <button onClick={toggleAll}>
+        {!toggleState ? "Uncheck" : "Check"} all
+      </button>
       <button onClick={clearAll}>Clear all</button>
+      <div>{todos.length} items in list;</div>
       <div>
-        {todos.length} items in list;{" "}
         {todos.filter((todo) => !todo.complete).length} not yet completed.
       </div>
       {todos.map((todo) => (
