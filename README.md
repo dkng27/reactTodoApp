@@ -9,10 +9,13 @@ Supports:
 - checking off an item
 - clearing an item, and
 - clearing all checked items.
-  <br>
-  Check / Uncheck all button dynamically checks whether items are completed.
-  Display number of items in the list and number of items not checked.
-  You can use <kbd>Enter</kbd> key to add an item instead of clicking on the `Submit` button.
-  Added items are persistent in localStorage.
+
+Check / Uncheck all button dynamically checks whether items are completed.
+
+Display number of items in the list and number of items not checked.
+
+You can use <kbd>Enter</kbd> key to add an item instead of clicking on the `Submit` button.
+
+Added items are persistent in localStorage.
 
 ![](./Screenshot.jpg)
