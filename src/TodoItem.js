@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function TodoItem({ todo, toggleAction, clearItem }) {
+export default function TodoItem({ todo, toggleAction, editItem, clearItem }) {
   return (
     <div>
       <input
@@ -8,7 +8,8 @@ export default function TodoItem({ todo, toggleAction, clearItem }) {
         checked={todo.complete}
         onChange={() => toggleAction(todo.id)}
       />
-      {todo.name} <button onClick={() => clearItem(todo.id)}>Clear</button>
+      {todo.name + " "} <button onClick={() => editItem(todo.id)}>Edit</button>
+      <button onClick={() => clearItem(todo.id)}>Clear</button>
     </div>
   );
 }

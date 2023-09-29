@@ -10,6 +10,7 @@ export default function TodoList() {
     return JSON.parse(stored_todos) || [];
   });
   const [toggleState, setToggleState] = useState(false);
+  const [tempEditId, setTempEditId] = useState();
 
   const newTodoName = useRef();
 
@@ -31,12 +32,18 @@ export default function TodoList() {
   function addTodo(e) {
     e.preventDefault();
     const name = newTodoName.current.value;
-    if (name)
-      setTodos((currentTodos) => [
-        ...currentTodos,
-        { id: uuidv4(), name: name, complete: false },
-      ]);
-    else alert("You need to give it a name!");
+    if (tempEditId == null) {
+      if (name)
+        setTodos((currentTodos) => [
+          ...currentTodos,
+          { id: uuidv4(), name: name, complete: false },
+        ]);
+      else alert("You need to give it a name!");
+    } else {
+      const todo = todos.find((todo) => todo.id === tempEditId);
+      todo.name = name;
+      setTempEditId();
+    }
     newTodoName.current.value = null;
   }
 
@@ -70,6 +77,14 @@ export default function TodoList() {
     setTodos(newTodos);
   }
 
+  function editItem(id) {
+    const todo = todos.find((todo) => todo.id === id);
+    newTodoName.current.value = todo.name;
+    setTempEditId(todo.id);
+    //clearItem(id);
+    newTodoName.current.focus();
+  }
+
   return (
     <>
       <input
@@ -95,6 +110,7 @@ export default function TodoList() {
           todo={todo}
           toggleAction={toggleTodo}
           clearItem={clearItem}
+          editItem={editItem}
         />
       ))}
     </>
