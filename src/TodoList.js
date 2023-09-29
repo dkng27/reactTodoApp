@@ -40,9 +40,11 @@ export default function TodoList() {
         ]);
       else alert("You need to give it a name!");
     } else {
-      const todo = todos.find((todo) => todo.id === tempEditId);
+      const newTodos = [...todos];
+      const todo = newTodos.find((todo) => todo.id === tempEditId);
       todo.name = name;
       setTempEditId();
+      setTodos(newTodos);
     }
     newTodoName.current.value = null;
   }
